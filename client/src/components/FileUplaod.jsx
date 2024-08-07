@@ -46,9 +46,6 @@ const FileUpload = () => {
         throw new Error('Network response was not ok');
       }
 
-      const data = await res.json();
-      const { url } = data;
-      setUploadedFile(prev => [...prev, url]); // Append new image URL
       setMessage('File Uploaded');
     } catch (err) {
       setMessage(`There was a problem with the server: ${err.message}`);

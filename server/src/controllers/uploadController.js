@@ -19,6 +19,7 @@ export const uploadImage = async (req, res) => {
       );
       stream.end(req.file.buffer); // End the stream with the file buffer
     });
+console.log(result);
 
     const newImage = new Image({
       url: result.secure_url,
@@ -36,6 +37,8 @@ export const uploadImage = async (req, res) => {
 export const getALLImages = async (req, res) => {
   try {
     const images = await Image.find();
+    console.log("images",images);
+    
     res.status(200).json(images);
   } catch (error) {
     console.error("Fetching images error:", error);
