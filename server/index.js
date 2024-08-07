@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import dbConnect from './src/config/db.js';
 import cors from 'cors';
 import uploadRoutes from "../server/src/routes/uplaod.route.js"
+import courseRoutes from "../server/src/routes/course.route.js"
 const app = express();
 dotenv.config();
 dbConnect();
@@ -10,6 +11,7 @@ app.use(express.json())
 app.use(cors());
 
 app.use("/api", uploadRoutes)
+app.use("/courses", courseRoutes)
 app.use(express.urlencoded())
 const PORT = process.env.PORT || 4000
 app.listen(PORT, ()=> {

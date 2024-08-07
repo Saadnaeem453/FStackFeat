@@ -19,7 +19,6 @@ export const uploadImage = async (req, res) => {
       );
       stream.end(req.file.buffer); // End the stream with the file buffer
     });
-console.log(result);
 
     const newImage = new Image({
       url: result.secure_url,
