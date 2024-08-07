@@ -9,10 +9,10 @@ dotenv.config();
 dbConnect();
 app.use(express.json())
 app.use(cors());
+app.use(express.urlencoded())
 
 app.use("/api", uploadRoutes)
 app.use("/courses", courseRoutes)
-app.use(express.urlencoded())
 const PORT = process.env.PORT || 4000
 app.listen(PORT, ()=> {
     console.log(`Server is running on port ${PORT}`)
