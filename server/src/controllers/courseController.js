@@ -24,68 +24,61 @@ export const createCourse = async (req, res) => {
       url: result.secure_url,
       public_id: result.public_id
     });
-
+    const savedImage = await newImage.save();
+console.log("savedImage",savedImage)
     const newCourse = new Course({
       title,
       price,
       category,
       description,
-      image: newImage
+      image: savedImage
     });
 
     await newCourse.save();
-    res.status(200).json(newCourse);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-
-
-export const getCoursesWithFilters = async (req, res) => {
-  console.log("Fetching courses with filters:", req.query);
-  
-  // Destructure query parameters
-  const { minPrice, maxPrice, category, sortBy, sortOrder, search } = req.query;
-  
-  // Initialize the query object
-  const query = {};
-
-  // Build query based on filters
-  if (minPrice && maxPrice) {
-    query.price = { $gte: parseFloat(minPrice), $lte: parseFloat(maxPrice) };
-  }
-  if (category) {
-    query.category = category;
-  }
-  if (search) {
-    query.title = { $regex: new RegExp(search, 'i') }; // Case-insensitive search
-  }
-  
-  // Initialize sort options
-  const sortOptions = {};
-  if (sortBy) {
-    sortOptions[sortBy] = sortOrder === "desc" ? -1 : 1;
-  }
-
-  try {
-    // Fetch courses with filters and sorting
-    const courses = await Course.find(query).sort(sortOptions);
+    console.log("newCourse",newCourse);
     
-    // Return the filtered and sorted courses
-    res.json(courses);
+    res.status(200).json(newCourse);
+
   } catch (error) {
-    // Handle errors
-    console.error("Error fetching courses:", error.message);
     res.status(500).json({ message: error.message });
   }
 };
+
+
+
 export const getCourses = async (req, res) => {
+    console.log(req.query)
+    // Destructure query parameters
+    const { minPrice, maxPrice, category, sortBy, sortOrder, search } = req.query;
+  
+    // Initialize the query object
+    const query = {};
+  
+    // Build query based on filters
+    if (minPrice && maxPrice) {
+      query.price = { $gte: parseFloat(minPrice), $lte: parseFloat(maxPrice) };
+    }
+    if (category) {
+      query.category = category;
+    }
+    if (search) {
+      query.title = { $regex: new RegExp(search, 'i') }; // Case-insensitive search
+    }
+  
+    // Initialize sort options
+    const sortOptions = {};
+    if (sortBy) {
+      sortOptions[sortBy] = sortOrder === "desc" ? -1 : 1;
+    }
+  
     try {
-      const courses = await Course.find({});
-      res.status(200).json(courses);
+      // Fetch courses with filters and sorting
+      const courses = await Course.find(query).sort(sortOptions).populate('image');
+      res.json(courses);
     } catch (error) {
+      // Handle errors
       console.error("Error fetching courses:", error.message);
       res.status(500).json({ message: error.message });
     }
   };
+  

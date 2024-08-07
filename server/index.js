@@ -4,6 +4,7 @@ import dbConnect from './src/config/db.js';
 import cors from 'cors';
 import uploadRoutes from "../server/src/routes/uplaod.route.js"
 import courseRoutes from "../server/src/routes/course.route.js"
+import Course from  "../server/src/models/course.model.js"
 const app = express();
 dotenv.config();
 dbConnect();

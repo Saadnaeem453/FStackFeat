@@ -7,6 +7,7 @@ if(!MONGO_URI){
     throw new Error("MONGO_URI is not defined in the environment variables")
 }
 await mongoose.connect(MONGO_URI)
+
 console.log("MOngoDb is connected")
 } catch (error) {
     console.log("Error while connecting database")
