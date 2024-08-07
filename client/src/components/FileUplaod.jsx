@@ -58,34 +58,36 @@ const FileUpload = () => {
         <div className="custom-file mb-4">
           <input
             type="file"
-            className="custom-file-input"
+            className="custom-file-inpu text-lg"
             id="customFile"
             onChange={onChange}
           />
-          <label className="custom-file-label" htmlFor="customFile">
+          <label className="custom-file-label text-lg" htmlFor="customFile">
             {filename}
           </label>
         </div>
         <input
           type="submit"
           value="Upload"
-          className="btn btn-primary btn-block mt-4"
+          className="btn btn-primary btn-block mt-4 text-md text-white bg-cyan-600 px-8  py-2 rounded-md"
         />
       </form>
       {message ? <p>{message}</p> : null}
+      <h3 className="text-center text-3xl font-semibold p-6 ">Uploaded Images</h3>
 
-      {uploadedFile.length > 0 && uploadedFile.map((url, index) => (
-        <div key={index} className="row mt-5">
-          <div className="col-md-2 ">
-            <h3 className="text-center">Uploaded Image</h3>
-            <img
-              style={{ width: '100%' }}
-              src={url.url}
-              alt={`Uploaded ${index}`}
-            />
-          </div>
-        </div>
-      ))}
+      {uploadedFile.length > 0 && (
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-5">
+    {uploadedFile.map((url, index) => (
+      <div key={index} className="flex justify-center items-center">
+        <img
+          className="w-full h-auto object-cover"
+          src={url.url}
+          alt={`Uploaded ${index}`}
+        />
+      </div>
+    ))}
+  </div>
+)}
     </div>
   );
 };
